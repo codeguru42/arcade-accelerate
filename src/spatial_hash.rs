@@ -3,7 +3,7 @@ use pyo3::prelude::*;
 #[pyclass]
 pub struct SpatialHash {
     #[pyo3(get, set)]
-    cell_size: u32
+    cell_size: u32,
 }
 
 #[pymethods]
@@ -19,7 +19,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_spatial_hash_new() {
+    fn test_new() {
         let spatial_hash = SpatialHash { cell_size: 42 };
         assert_eq!(42, spatial_hash.cell_size)
     }
