@@ -18,6 +18,7 @@ def bootstrap():
         "arcade.geometry",
         "arcade.sprite_list.collision",
         "arcade.sprite.base",
+        "arcade.sprite_list.spatial_hash",
     ]
 
     pkgs = []
@@ -54,6 +55,9 @@ def patch_spritelist_collision():
     )
     arcade.sprite_list.collision.check_for_collision_with_lists = (
         arcade_accelerate.check_for_collision_with_lists
+    )
+    arcade.sprite_list.spatial_hash.SpatialHash = (
+        arcade_accelerate.SpatialHash
     )
 
 
