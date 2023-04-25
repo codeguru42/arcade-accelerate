@@ -3,13 +3,13 @@ use pyo3::prelude::*;
 #[pyclass]
 pub struct SpatialHash {
     #[pyo3(get, set)]
-    cell_size: i32
+    cell_size: u32
 }
 
 #[pymethods]
 impl SpatialHash {
     #[new]
-    fn new(cell_size: i32) -> Self {
+    fn new(cell_size: u32) -> Self {
         Self { cell_size }
     }
 }
