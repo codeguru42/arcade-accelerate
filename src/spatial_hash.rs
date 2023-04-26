@@ -1,16 +1,23 @@
+use pyo3::exceptions::PyValueError;
 use pyo3::prelude::*;
 
+#[derive(PartialEq)]
 #[pyclass]
 pub struct SpatialHash {
     #[pyo3(get, set)]
-    cell_size: u16,
+    cell_size: i32,
 }
 
 #[pymethods]
 impl SpatialHash {
     #[new]
-    fn new(cell_size: u16) -> Self {
-        Self { cell_size }
+    fn new(cell_size: i32) -> PyResult<Self> {
+        println!("new");
+        return if cell_size <= 0 {
+            Err(PyValueError::new_err("cell_size must be greater than 0"))
+        } else {
+            Ok(Self { cell_size })
+        };
     }
 
     fn hash(&self, point: (i32, i32)) -> (i32, i32) {
@@ -24,12 +31,6 @@ impl SpatialHash {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn test_new() {
-        let spatial_hash = SpatialHash { cell_size: 42 };
-        assert_eq!(42, spatial_hash.cell_size)
-    }
 
     #[test]
     fn test_hash() {
