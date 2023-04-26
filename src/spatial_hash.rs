@@ -1,5 +1,6 @@
 use std::collections::{HashMap, HashSet};
 
+use crate::BasicSprite;
 use pyo3::exceptions::PyValueError;
 use pyo3::prelude::*;
 
@@ -7,8 +8,8 @@ use pyo3::prelude::*;
 pub struct SpatialHash {
     #[pyo3(get, set)]
     cell_size: i32,
-    contents: HashMap<(i32, i32), Vec<PyObject>>,
-    buckets: HashMap<PyObject, Vec<HashSet<PyObject>>>,
+    contents: HashMap<(i32, i32), Vec<BasicSprite>>,
+    buckets: HashMap<PyObject, Vec<HashSet<BasicSprite>>>,
 }
 
 #[pymethods]
@@ -45,5 +46,12 @@ mod tests {
         let result = spatial_hash.hash(point);
         let expected = (2, 3);
         assert_eq!(expected, result);
+    }
+
+    #[test]
+    fn test_add() {
+        let spatial_hash = SpatialHash::new(10).unwrap();
+        let sprite = BasicSprite::new();
+        spatial_hash.add()
     }
 }
