@@ -1,3 +1,5 @@
+use std::collections::{HashMap, HashSet};
+
 use pyo3::exceptions::PyValueError;
 use pyo3::prelude::*;
 
@@ -5,6 +7,8 @@ use pyo3::prelude::*;
 pub struct SpatialHash {
     #[pyo3(get, set)]
     cell_size: i32,
+    contents: HashMap<(i32, i32), Vec<PyObject>>,
+    buckets: HashMap<PyObject, Vec<HashSet<PyObject>>>,
 }
 
 #[pymethods]
@@ -14,7 +18,11 @@ impl SpatialHash {
         return if cell_size <= 0 {
             Err(PyValueError::new_err("cell_size must be greater than 0"))
         } else {
-            Ok(Self { cell_size })
+            Ok(Self {
+                cell_size,
+                contents: HashMap::new(),
+                buckets: HashMap::new(),
+            })
         };
     }
 
