@@ -1,7 +1,6 @@
 use pyo3::exceptions::PyValueError;
 use pyo3::prelude::*;
 
-#[derive(PartialEq)]
 #[pyclass]
 pub struct SpatialHash {
     #[pyo3(get, set)]
@@ -12,7 +11,6 @@ pub struct SpatialHash {
 impl SpatialHash {
     #[new]
     fn new(cell_size: i32) -> PyResult<Self> {
-        println!("new");
         return if cell_size <= 0 {
             Err(PyValueError::new_err("cell_size must be greater than 0"))
         } else {
@@ -34,7 +32,7 @@ mod tests {
 
     #[test]
     fn test_hash() {
-        let spatial_hash = SpatialHash { cell_size: 10 };
+        let spatial_hash = SpatialHash::new(10).unwrap();
         let point = (20, 30);
         let result = spatial_hash.hash(point);
         let expected = (2, 3);
