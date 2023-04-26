@@ -528,3 +528,21 @@ impl Sprite {
         Ok(())
     }
 }
+
+impl BasicSprite {
+    pub fn native_bottom(&self) -> f32 {
+        self.hitbox.bottom_native()
+    }
+
+    pub(crate) fn native_left(&self) -> f32 {
+        self.hitbox.left_native()
+    }
+
+    pub fn native_right(&self) -> f32 {
+        self.hitbox.right_native()
+    }
+
+    pub fn native_top(&self) -> f32 {
+        self.hitbox.top_native()
+    }
+}
