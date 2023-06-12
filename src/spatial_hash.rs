@@ -8,8 +8,8 @@ use pyo3::prelude::*;
 pub struct SpatialHash {
     #[pyo3(get, set)]
     cell_size: i32,
-    contents: HashMap<(i32, i32), Vec<BasicSprite>>,
-    buckets_for_sprite: HashMap<BasicSprite, Vec<Vec<BasicSprite>>>,
+    contents: HashMap<(i32, i32), Vec<&BasicSprite>>,
+    buckets_for_sprite: HashMap<BasicSprite, Vec<Vec<&BasicSprite>>>,
 }
 
 #[pymethods]
@@ -34,17 +34,17 @@ impl SpatialHash {
         )
     }
 
-    fn add(&mut self, sprite: BasicSprite) {
+    fn add(&mut self, sprite: &BasicSprite) {
         let min_point = (sprite.native_left() as i32, sprite.native_bottom() as i32);
         let max_point = (sprite.native_right() as i32, sprite.native_top() as i32);
         let min_hash = self.hash(min_point);
         let max_hash = self.hash(max_point);
-        let mut buckets: Vec<Vec<BasicSprite>> = Vec::new();
+        let mut buckets: Vec<Vec<&BasicSprite>> = Vec::new();
 
         for i in min_hash.0..max_hash.0 {
             for j in min_hash.1..max_hash.1 {
                 let bucket = self.contents.entry((i, j)).or_insert(Vec::new());
-                bucket.push(sprite.clone());
+                bucket.push(&sprite);
                 buckets.push(bucket.clone());
             }
         }
@@ -70,6 +70,6 @@ mod tests {
     fn test_add() {
         let spatial_hash = SpatialHash::new(10).unwrap();
         let sprite = BasicSprite::new();
-        spatial_hash.add(sprite)
+        spatial_hash.add(&sprite)
     }
 }
