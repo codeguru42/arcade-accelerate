@@ -4,6 +4,7 @@ use pyo3::{intern, prelude::*};
 use crate::hitbox::HitBox;
 
 #[pyclass(subclass, module = "arcade.sprite.base")]
+#[derive(Eq, Hash, PartialEq)]
 pub struct BasicSprite {
     #[pyo3(get, name = "_texture")]
     texture: PyObject,
