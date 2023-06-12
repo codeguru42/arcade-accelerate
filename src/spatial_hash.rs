@@ -68,7 +68,7 @@ mod tests {
 
     #[test]
     fn test_add() {
-        let spatial_hash = SpatialHash::new(10).unwrap();
+        let mut spatial_hash = SpatialHash::new(10).unwrap();
         let sprite = BasicSprite::new();
         spatial_hash.add(&sprite)
     }
