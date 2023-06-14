@@ -14,6 +14,9 @@ pub use geometry::{
 mod sprite;
 pub use sprite::BasicSprite;
 
+mod texture;
+use crate::texture::Texture;
+
 mod sprite_list;
 pub use sprite_list::{check_for_collision_with_list, check_for_collision_with_lists};
 
@@ -23,6 +26,7 @@ fn arcade_accelerate(_py: Python, m: &PyModule) -> PyResult<()> {
     m.add_class::<HitBox>()?;
     m.add_class::<RotatableHitBox>()?;
     m.add_class::<BasicSprite>()?;
+    m.add_class::<Texture>()?;
     m.add_function(wrap_pyfunction!(math::rotate_point, m)?)?;
     m.add_function(wrap_pyfunction!(math::clamp, m)?)?;
     m.add_function(wrap_pyfunction!(math::lerp, m)?)?;
