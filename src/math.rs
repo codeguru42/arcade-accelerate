@@ -492,4 +492,13 @@ mod tests {
         assert_float_eq!(round_float(point.0, 2), 0.0, abs <= 1.0e-3);
         assert_float_eq!(round_float(point.1, 2), 10.0, abs <= 1.0e-3);
     }
+
+    #[test]
+    fn test_cross_2d() {
+        let mut result = cross_2d((1.0, 2.0), (3.0, 4.0));
+        assert_eq!(result, -2.0);
+
+        result = cross_2d((3.0, 4.0), (1.0, 2.0));
+        assert_eq!(result, 2.0);
+    }
 }
