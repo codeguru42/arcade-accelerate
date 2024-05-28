@@ -197,7 +197,7 @@ pub fn quaternion_rotation(
 }
 
 #[pyfunction]
-fn cross_2d(a: (f32, f32), b: (f32, f32)) -> f32 {
+pub fn cross_2d(a: (f32, f32), b: (f32, f32)) -> f32 {
     a.0 * b.1 - a.1 * b.0
 }
 
