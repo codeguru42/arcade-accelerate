@@ -196,11 +196,17 @@ pub fn quaternion_rotation(
     (x, y, z)
 }
 
+#[pyfunction]
+fn cross_2d(a: (f32, f32), b: (f32, f32)) -> f32 {
+    a.0 * b.1 - a.1 * b.0
+}
+
 // This is only a subset of _Vec2 methods defined in arcade.math.py
 struct _Vec2 {
     x: f32,
     y: f32,
 }
+
 #[allow(dead_code)]
 impl _Vec2 {
     fn from_polar(angle: f32, radius: f32) -> _Vec2 {
