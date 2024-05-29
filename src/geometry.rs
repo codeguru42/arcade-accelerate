@@ -228,6 +228,10 @@ fn sub(a: (f32, f32), b: (f32, f32)) -> (f32, f32) {
     (a.0 - b.0, a.1 - b.1)
 }
 
+/*
+* Given two lines represented as `o1 + t * d1` and `o2 + u * d2`, this function returns the value
+ of `u` at which the two lines intersect.
+*/
 #[pyfunction]
 pub fn get_intersection_fraction(
     o1: (f32, f32),
@@ -237,6 +241,7 @@ pub fn get_intersection_fraction(
 ) -> Option<f32> {
     let d = cross_2d(d1, d2);
 
+    // lines are parallel
     if d == 0.0 {
         return None;
     }
