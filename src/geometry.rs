@@ -1,6 +1,5 @@
 use crate::cross_2d;
 use pyo3::prelude::*;
-use std::ops::Add;
 
 pub fn are_polygons_intersecting_native(
     poly_a: &Vec<(f32, f32)>,
