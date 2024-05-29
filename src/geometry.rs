@@ -1,4 +1,6 @@
+use crate::cross_2d;
 use pyo3::prelude::*;
+use std::ops::Add;
 
 pub fn are_polygons_intersecting_native(
     poly_a: &Vec<(f32, f32)>,
@@ -218,6 +220,30 @@ pub fn is_point_in_polygon(x: f32, y: f32, polygon: Vec<(f32, f32)>) -> bool {
     count % 2 == 1
 }
 
+fn add(a: (f32, f32), b: (f32, f32)) -> (f32, f32) {
+    (a.0 + b.0, a.1 + b.1)
+}
+
+fn sub(a: (f32, f32), b: (f32, f32)) -> (f32, f32) {
+    (a.0 - b.0, a.1 - b.1)
+}
+
+#[pyfunction]
+pub fn get_intersection_fraction(
+    o1: (f32, f32),
+    d1: (f32, f32),
+    o2: (f32, f32),
+    d2: (f32, f32),
+) -> Option<f32> {
+    let d = cross_2d(d1, d2);
+
+    if d == 0.0 {
+        return None;
+    }
+
+    return Some(cross_2d(sub(o2, o1), d2) / d);
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -311,5 +337,11 @@ mod tests {
         let polygon = vec![];
         let result = is_point_in_polygon(25.0, 25.0, polygon);
         assert!(!result);
+    }
+
+    #[test]
+    fn test_get_intersection_fraction() {
+        let result = get_intersection_fraction((0.0, 0.0), (2.0, 2.0), (0.0, 2.0), (2.0, -2.0));
+        assert_eq!(result, Some(0.5));
     }
 }
